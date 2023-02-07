@@ -2,7 +2,7 @@ services:
   slackfrontend:
     build:
       context: .
-      dockerfile: Dockerfile.reactUI
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"    
     depends_on:
