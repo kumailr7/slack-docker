@@ -21,19 +21,19 @@ jobs:
       addToPath: true
   - checkout: self
   - script: |
-      echo "##vso[task.setvariable variable=COMMIT_ID]$(git rev-parse --short=3 HEAD)"
+      echo "##vso[task.setvariable variable=COMMIT_ID]$(git rev-parse --short=4 HEAD)"
     displayName: 'Get Short Commit ID'
   - script: |
-      echo "##vso[build.updatebuildnumber]$(Build.BuildNumber)-$(COMMIT_ID)"
+      echo "##vso[build.updatebuildnumber]$(COMMIT_ID)"
     displayName: 'Set Build Number'
   - task: Docker@2
     inputs:
       command: 'build'
       Dockerfile: '**/Dockerfile'
       tags: |
-        $(Build.Repository.Name):$(Build.BuildNumber)
+        $(Build.Repository.Name):$(COMMIT_ID)
   - task: Docker@2
     inputs:
       command: 'push'
       tags: |
-        $(Build.Repository.Name):$(Build.BuildNumber)
+        $(Build.Repository.Name):$(COMMIT_ID)
