@@ -9,11 +9,31 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+jobs:
+- job: BuildAndPushDockerImage
+  displayName: 'Build and Push Docker Image'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+  - checkout: self
+  - script: |
+      echo "##vso[task.setvariable variable=COMMIT_ID]$(git rev-parse --short HEAD)"
+    displayName: 'Get Short Commit ID'
+  - script: |
+      echo "##vso[build.updatebuildnumber]$(Build.BuildNumber)-$(COMMIT_ID)"
+    displayName: 'Set Build Number'
+  - task: Docker@2
+    inputs:
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.Repository.Name):$(Build.BuildNumber)
+  - task: Docker@2
+    inputs:
+      command: 'push'
+      tags: |
+        $(Build.Repository.Name):$(Build.BuildNumber)
