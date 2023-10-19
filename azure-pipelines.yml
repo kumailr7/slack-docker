@@ -21,7 +21,7 @@ jobs:
       addToPath: true
   - checkout: self
   - script: |
-      echo "##vso[task.setvariable variable=COMMIT_ID]$(git rev-parse --short HEAD)"
+      echo "##vso[task.setvariable variable=COMMIT_ID]$(git rev-parse --short=3 HEAD)"
     displayName: 'Get Short Commit ID'
   - script: |
       echo "##vso[build.updatebuildnumber]$(Build.BuildNumber)-$(COMMIT_ID)"
