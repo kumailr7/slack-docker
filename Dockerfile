@@ -1,4 +1,4 @@
-FROM node:16-slim-buster
+FROM node:bookworm-slim
 WORKDIR /app
 COPY ./package.json ./package.json
 COPY ./public ./public
