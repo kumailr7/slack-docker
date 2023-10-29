@@ -1,5 +1,6 @@
 # Containerizing a Slack Clone App Built with the MERN Stack
 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 
 
