@@ -27,7 +27,7 @@
 ## Building the Service containers
 
 ```
- docker compose up -d —build
+ docker compose up -d --build
 ```
 
 ![image](https://user-images.githubusercontent.com/313480/193378996-14ce3feb-5087-4e14-b07d-a350e6eb133c.png)
